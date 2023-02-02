@@ -24,9 +24,19 @@ class ItemsController < ApplicationController
 
   def edit
     @item = Item.find(params[:id])
+    #  ログイン状態の場合でも、自身が出品していない商品の商品情報編集ページへ遷移しようとすると、商品の販売状況に関わらずトップページに遷移する。
+    if @item.user_id == current_user.id
+    else
+      redirect_to root_path
+    end
   end
 
-  
+  def update
+    item = Item.find(params[:id])
+    item.update(item_params)
+  end
+
+
   private
 
   def item_params
