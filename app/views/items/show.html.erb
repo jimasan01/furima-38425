@@ -25,7 +25,7 @@
 
     <%# ログイン状態且つ、自身が出品した販売中商品の場合にのみ、「商品の編集」「削除」ボタン表示 %>
   <% if user_signed_in? && current_user.id == @item.user_id%>
-    <%= link_to "商品の編集", "#", method: :get, class: "item-red-btn" %>
+    <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
     <p class="or-text">or</p>
     <%= link_to "削除", "#", method: :delete, class:"item-destroy" %>
   <% end %>
