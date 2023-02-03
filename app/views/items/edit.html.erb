@@ -10,7 +10,7 @@ app/assets/stylesheets/items/new.css %>
     <%= form_with(model: @item, local: true) do |f| %>
 
     <%# エラー発生時にメッセージを表示 %>
-    <%= render 'shared/error_message', model: f.object %>
+    <%= render 'shared/error_messages', model: f.object %>
 
     <%# 商品画像 %>
     <div class="img-upload">
