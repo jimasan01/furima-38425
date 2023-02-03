@@ -38,9 +38,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    #ログイン状態且つ、自分の出品した商品のみ削除可能
-    if @item.user_id == current_user.id
-       @item.destroy
+    if @item.destroy
        redirect_to root_path
     end
   end
