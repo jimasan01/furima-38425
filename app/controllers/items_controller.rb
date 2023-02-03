@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  
+  before_action :set_item, only: [:show, :edit, :update]
   def index
     @items = Item.order("created_at DESC")
   end
@@ -19,11 +19,9 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
   end
 
   def edit
-    @item = Item.find(params[:id])
     #  ログイン状態の場合でも、自身が出品していない商品の商品情報編集ページへ遷移しようとすると、商品の販売状況に関わらずトップページに遷移する。
     if @item.user_id == current_user.id
     else
@@ -32,7 +30,6 @@ class ItemsController < ApplicationController
   end
 
   def update
-    @item = Item.find(params[:id])
     @item.update(item_params)
     if @item.valid? 
        redirect_to item_path(item_params)
@@ -48,4 +45,7 @@ class ItemsController < ApplicationController
     params.require(:item).permit(:image, :name, :explanation, :category_id, :state_id, :postage_id, :area_id, :sipping_day_id, :price).merge(user_id: current_user.id)
   end
 
+  def set_item
+    @item = Item.find(params[:id])
+  end
 end
