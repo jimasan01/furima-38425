@@ -1,6 +1,8 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_current, only: [:edit, :destroy]
+  
   def index
     @items = Item.order("created_at DESC")
   end
@@ -22,11 +24,6 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    #  ログイン状態の場合でも、自身が出品していない商品の商品情報編集ページへ遷移しようとすると、商品の販売状況に関わらずトップページに遷移する。
-    if @item.user_id == current_user.id
-    else
-      redirect_to root_path
-    end
   end
 
   def update
@@ -38,9 +35,8 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    if @item.destroy
-       redirect_to root_path
-    end
+    @item.destroy
+    redirect_to root_path
   end
 
   private
@@ -52,4 +48,14 @@ class ItemsController < ApplicationController
   def set_item
     @item = Item.find(params[:id])
   end
+
+  def set_current
+    # ログイン状態且つ、自分の出品した商品のみ
+    # 自身が出品していない商品の商品情報編集ページへ遷移しようとすると、商品の販売状況に関わらずトップページに遷移する。
+    if @item.user_id == current_user.id
+    else
+      redirect_to root_path
+    end
+  end
+
 end
