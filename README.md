@@ -53,7 +53,7 @@
 
 - belongs_to :buy
 
-## buys テーブル
+## orders テーブル
 
 | Column  | Type       | Options                        |
 | ------- | ---------- | ------------------------------ |
