@@ -6,6 +6,7 @@ class User < ApplicationRecord
   
   # アソシエーション
   has_many :items
+  has_many :orders
 
   # パスワードは、半角英数字混合での入力が必須
   PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
