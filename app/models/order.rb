@@ -1,5 +1,5 @@
 class Order < ApplicationRecord
   belongs_to :user
   belongs_to :item
-  has_one :Place
+  has_one :place
 end
