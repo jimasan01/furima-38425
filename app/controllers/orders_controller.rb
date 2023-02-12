@@ -25,6 +25,9 @@ class OrdersController < ApplicationController
 
   def set_order
     @item = Item.find(params[:item_id])
+    # ログイン状態の場合でも、自身が出品していない売却済み商品の商品購入ページへ遷移しようとすると、トップページに遷移する。
+    # ログイン状態の場合でも、自身が出品した商品の商品購入ページに遷移しようとすると、商品の販売状況に関わらずトップページに遷移する。
+    redirect_to root_path if current_user.id == @item.user_id || @item.order != nil
   end
 
   def pay_item
