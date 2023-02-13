@@ -51,8 +51,8 @@ class ItemsController < ApplicationController
 
   def set_current
     # ログイン状態且つ、自分の出品した商品のみ
-    # 自身が出品していない商品の商品情報編集ページへ遷移しようとすると、商品の販売状況に関わらずトップページに遷移する。
-    if @item.user_id == current_user.id
+    # 自身が出品していない商品、自身が出品した売却済みの商品の商品情報編集ページへ遷移しようとすると、商品の販売状況に関わらずトップページに遷移する。
+    if @item.user_id == current_user.id && @item.order.nil?
     else
       redirect_to root_path
     end
